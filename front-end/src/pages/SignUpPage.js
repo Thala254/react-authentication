@@ -19,7 +19,7 @@ export default function SignUpPage() {
     });
     const { token } = response.data;
     setToken(token);
-    history.push("/please-verify");
+    history.push(`/please-verify?email=${encodeURIComponent(emailValue)}`);
   };
 
   return (

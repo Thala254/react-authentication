@@ -36,14 +36,18 @@ export default function LogInPage() {
   }, []);
 
   const onLogInClicked = async () => {
-    const response = await axios.post("/api/login", {
-      email: emailValue,
-      password: passwordValue,
-    });
+    try {
+      const response = await axios.post("/api/login", {
+        email: emailValue,
+        password: passwordValue,
+      });
 
-    const { token } = response.data;
-    setToken(token);
-    history.push("/");
+      const { token } = response.data;
+      setToken(token);
+      history.push("/");
+    } catch (e) {
+      setErrorMessage(e.message);
+    }
   };
 
   return (

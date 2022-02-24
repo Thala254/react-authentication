@@ -15,6 +15,8 @@
     "@babel/node": "7.13.12",
     "@babel/preset-env": "7.13.12",
     "@sendgrid/mail": "^7.6.1",
+    "amazon-cognito-identity-js": "^5.2.6",
+    "aws-sdk": "^2.1079.0",
     "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -23,6 +25,7 @@
     "googleapis": "^95.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "3.6.5",
+    "node-fetch": "^2.6.7",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
