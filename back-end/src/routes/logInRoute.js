@@ -13,9 +13,13 @@ export const logInRoute = {
 
     if (!user) return res.sendStatus(401);
 
-    const { _id: id, isVerified, passwordHash, info } = user;
+    const { _id: id, isVerified, passwordHash, salt, info } = user;
+    const pepper = process.env.PEPPER_STRING;
 
-    const isCorrect = await bcrypt.compare(password, passwordHash);
+    const isCorrect = await bcrypt.compare(
+      salt + password + pepper,
+      passwordHash
+    );
 
     if (isCorrect) {
       jwt.sign(

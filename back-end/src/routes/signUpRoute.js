@@ -17,7 +17,9 @@ export const signUpRoute = {
       return res.sendStatus(409);
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const salt = uuid();
+    const pepper = process.env.PEPPER_STRING;
+    const passwordHash = await bcrypt.hash(salt + password + pepper, 10);
 
     const verificationString = uuid();
 
@@ -26,6 +28,7 @@ export const signUpRoute = {
     const result = await db.collection("users").insertOne({
       email,
       passwordHash,
+      salt,
       info: startingInfo,
       isVerified: false,
       verificationString,
@@ -42,7 +45,6 @@ export const signUpRoute = {
         Thanks for signing up! To verify your email, click here: http://localhost:3000/verify-email/${verificationString}`,
       });
     } catch (e) {
-      console.log(e);
       return res.sendStatus(500);
     }
 
