@@ -4,7 +4,7 @@ import axios from "axios";
 import { useToken } from "../auth/useToken";
 
 export default function SignUpPage() {
-  const [token, setToken] = useToken();
+  const [, setToken] = useToken();
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
   const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
@@ -13,13 +13,17 @@ export default function SignUpPage() {
   const history = useHistory();
 
   const onSignUpClicked = async () => {
-    const response = await axios.post("/api/signup", {
-      email: emailValue,
-      password: passwordValue,
-    });
-    const { token } = response.data;
-    setToken(token);
-    history.push(`/please-verify?email=${encodeURIComponent(emailValue)}`);
+    try {
+      const response = await axios.post("/api/signup", {
+        email: emailValue,
+        password: passwordValue,
+      });
+      const { token } = response.data;
+      setToken(token);
+      history.push(`/please-verify?email=${encodeURIComponent(emailValue)}`);
+    } catch (e) {
+      setErrorMessage(e.message);
+    }
   };
 
   return (
